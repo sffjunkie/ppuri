@@ -1,8 +1,8 @@
+from lib2to3.pgen2.parse import ParseError
 import pytest
 
-# import pyparsing as pp
-
 from ppuri.component import authority
+from ppuri.exception import ParseError
 
 authorities = [
     ("bbc.com", {"address": "bbc.com"}),
@@ -18,3 +18,13 @@ authorities = [
 def test_authority_parse(text: str, info: list[str]):
     res = authority.parse(text)
     assert res == info
+
+
+def test_authority_port_too_big():
+    with pytest.raises(ParseError):
+        _res = authority.parse("www.bbc.com:65536")
+
+
+def test_authority_port_too_small():
+    with pytest.raises(ParseError):
+        _res = authority.parse("www.bbc.com:0")

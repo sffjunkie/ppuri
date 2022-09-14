@@ -13,7 +13,7 @@ from ppuri.exception import ParseError
 def check_port_number(tokens: pp.ParseResults) -> Any:
     try:
         port = int(tokens[0])  # type: ignore
-        if port < 0 or port > 65535:
+        if port <= 0 or port > 65535:
             raise pp.ParseException("Invalid port number > 65535")
     except ValueError:
         raise pp.ParseException("Port is not a number")
