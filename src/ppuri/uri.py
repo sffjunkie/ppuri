@@ -21,7 +21,7 @@ def parse(text: str) -> dict[str, Any]:
         res = Uri.parse_string(text, parse_all=True)
         return res.as_dict()  # type: ignore
     except ParseException as exc:
-        raise ParseError(f"{text} is not a valid authority") from exc
+        raise ParseError(f"{text} is not a valid URI") from exc
 
 
 def scan(text: str) -> list[dict[str, str]]:
