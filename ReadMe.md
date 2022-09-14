@@ -135,3 +135,7 @@ Currently supports the following schemes
     "path": "The /file/path",
 }
 ```
+
+## Package Status
+
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/sffjunkie/ppuri/ppuri-test) ![PyPI - Downloads](https://img.shields.io/pypi/dm/ppuri)

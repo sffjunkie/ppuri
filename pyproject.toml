@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "ppuri"
-version = "0.1.0"
+version = "0.1.1"
 description = "A pyparsing based URI parser/scanner"
 authors = ["Simon Kennedy <sffjunkie+code@gmail.com>"]
 license = "Apache-2.0"
+readme = "ReadMe.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
