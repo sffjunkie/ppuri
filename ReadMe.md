@@ -65,9 +65,9 @@ Currently supports the following schemes
 
 ```json
 {
-  "scheme": "http" or "https",
+  "scheme": "http or https",
   "authority": {
-    "address": "hostname" or "ipv4 address" or "ipv6 address",
+    "address": "hostname or ipv4 address or ipv6 address",
     "port": "port number",
     "username": "user name if provided",
     "password": "pasword if provided"
