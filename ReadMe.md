@@ -12,7 +12,7 @@ pipx install ppuri
 
 ### Parsing
 
-Either import `Uri` from `ppuri.uri` and use the pyparsing `parse_string` method to match and parse against all URI schemes e.g.
+Either import `ppuri.uri` and use the `parse` function to match and parse against all URI schemes e.g.
 
 ```python
 from ppuri import uri
@@ -28,7 +28,7 @@ https
 www.example.com
 ```
 
-Or import a specific scheme
+Or import a specific scheme's parse function.
 
 ```python
 from ppuri.scheme import http
