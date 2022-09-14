@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "uri"
+name = "ppuri"
 version = "0.1.0"
 description = ""
 authors = ["Simon Kennedy <sffjunkie+code@gmail.com>"]
