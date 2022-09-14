@@ -15,7 +15,7 @@
 
 import pyparsing as pp
 
-__version__ = "0.1.3"
+__version__ = "0.2.0"
 
 # TODO: Use these variables
 general_delimeter_set = set(":/?#[]@")
