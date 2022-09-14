@@ -63,24 +63,24 @@ Currently supports the following schemes
 
 `parse_string` returns a dictionary of the form
 
-```python
+```json
 {
-    "scheme": "http" or "https",
-    "authority": {
-        "address": "hostname" or "ipv4 address" or "ipv6 address",
-        "port": "port number",
-        "username": "user name if provided",
-        "password": "pasword if provided"
-    },
-    "path": "path if provided",
-    "parameters": [
-        "list of parameters if provided",
-        {
-            "name": "parameter name",
-            "value": "parameter value or None if not provided"
-        }
-    ],
-    "fragment": "fragment if provided"
+  "scheme": "http" or "https",
+  "authority": {
+    "address": "hostname" or "ipv4 address" or "ipv6 address",
+    "port": "port number",
+    "username": "user name if provided",
+    "password": "pasword if provided"
+  },
+  "path": "path if provided",
+  "parameters": [
+    "list of parameters if provided",
+    {
+      "name": "parameter name",
+      "value": "parameter value or None if not provided"
+    }
+  ],
+  "fragment": "fragment if provided"
 }
 ```
 
@@ -88,11 +88,11 @@ Currently supports the following schemes
 
 `parse_string` returns a dictionary of the form
 
-```python
+```json
 {
-    "scheme": "urn",
-    "nid": "Namespace Identifier",
-    "nss": "Namespace Specific String"
+  "scheme": "urn",
+  "nid": "Namespace Identifier",
+  "nss": "Namespace Specific String"
 }
 ```
 
@@ -100,18 +100,19 @@ Currently supports the following schemes
 
 `parse_string` returns a dictionary of the form
 
-```python
+```json
 {
-    "scheme": "mailto",
-    "addresses": [
-        "List of email addresses",
-    ]
-    "parameters": [
-        "list of parameters if provided",
-        {
-            "name": "bcc",
-            "value": "dave@example.com"
-        }
+  "scheme": "mailto",
+  "addresses": [
+    "List of email addresses",
+  ]
+  "parameters": [
+    "list of parameters if provided",
+    {
+        "name": "bcc",
+        "value": "dave@example.com"
+    }
+  ]
 }
 ```
 
@@ -119,13 +120,13 @@ Currently supports the following schemes
 
 `parse_string` returns a dictionary of the form
 
-```python
+```json
 {
-    "scheme": "data",
-    "type": "Mime type",
-    "subtype": "Mime Subtype",
-    "encoding": "base64 if specified",
-    "data": "The actual data"
+  "scheme": "data",
+  "type": "Mime type",
+  "subtype": "Mime Subtype",
+  "encoding": "base64 if specified",
+  "data": "The actual data"
 }
 ```
 
@@ -133,10 +134,10 @@ Currently supports the following schemes
 
 `parse_string` returns a dictionary of the form
 
-```python
+```json
 {
-    "scheme": "file",
-    "path": "The /file/path",
+  "scheme": "file",
+  "path": "The /file/path"
 }
 ```
 
