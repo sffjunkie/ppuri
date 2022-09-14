@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "ppuri"
 version = "0.1.0"
-description = ""
+description = "A pyparsing based URI parser/scanner"
 authors = ["Simon Kennedy <sffjunkie+code@gmail.com>"]
 
 [tool.poetry.dependencies]
