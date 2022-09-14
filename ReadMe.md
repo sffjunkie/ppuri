@@ -17,15 +17,19 @@ Either import `ppuri.uri` and use the `parse` function to match and parse agains
 ```python
 from ppuri import uri
 info = uri.parse("https://www.example.com:443/a.path?q=aparam#afragment")
-print(info["scheme"])
-print(info["authority"]["address"])
+print(info)
 ```
 
 prints
 
-```
-https
-www.example.com
+```json
+{
+  "authority": { "address": "www.example.com", "port": "443" },
+  "fragment": "afragment",
+  "parameters": [{ "name": "q", "value": "aparam" }],
+  "path": "/a.path",
+  "scheme": "https"
+}
 ```
 
 Or import a specific scheme's parse function.
