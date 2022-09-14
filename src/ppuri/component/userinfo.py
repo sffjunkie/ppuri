@@ -1,4 +1,5 @@
 import pyparsing as pp
+from ppuri.exception import ParseError
 
 
 def set_default_password(toks: pp.ParseResults):
@@ -16,16 +17,9 @@ user_info_part = (
 UserInfo = user_info_part + pp.Optional(pp.Literal("@")).suppress()
 
 
-def userinfo_parse(text: str) -> dict[str, str]:
-    res = user_info_part.parse_string(text)
-    return res.as_dict()  # type: ignore
-
-
-def userinfo_scan(text: str) -> list[dict[str, str]]:
-    userinfos: list[dict[str, str]] = []
-
-    for tokens, _start, _end in UserInfo.scan_string(text):
-        parse_result: dict[str, str] = tokens.as_dict()  # type: ignore
-        userinfos.append(parse_result)
-
-    return userinfos
+def parse(text: str) -> dict[str, str]:
+    try:
+        res = UserInfo.parse_string(text, parse_all=True)
+        return res.as_dict()  # type: ignore
+    except pp.ParseException as exc:
+        raise ParseError(f"{text} is not a valid authority") from exc

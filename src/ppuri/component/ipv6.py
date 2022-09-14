@@ -1,5 +1,6 @@
 import pyparsing as pp
-from ppuri.component.ipv4 import IPv4Address
+from ppuri.component import ipv4
+from ppuri.exception import ParseError
 
 colon = pp.Literal(":")
 ipv6_segment = pp.Word(pp.hexnums, min=1, max=4)
@@ -29,18 +30,21 @@ IPv6Address = pp.Combine(
             + pp.Optional(colon + pp.Word("0", min=1, max=4))
             + colon
         )
-        + IPv4Address
+        + ipv4.IPv4Address
     )
-    | (ipv6_segment + colon)[1, 4] + colon + IPv4Address
+    | (ipv6_segment + colon)[1, 4] + colon + ipv4.IPv4Address
 ).set_results_name("address") + ~pp.FollowedBy(colon)
 
 
-def ipv6_parse(text: str) -> str:
-    parse_result = IPv6Address.parse_string(text)
-    return parse_result.as_list()[0]  # type: ignore
+def parse(text: str) -> str:
+    try:
+        result = IPv6Address.parse_string(text)
+        return result.as_dict()["address"]  # type: ignore
+    except pp.ParseException as exc:
+        raise ParseError(f"{text} is not a valid IPv6 address") from exc
 
 
-def ipv6_search(text: str) -> list[str]:
+def ipv6_scan(text: str) -> list[str]:
     try:
         res = IPv6Address.scan_string(text)
     except pp.ParseException:

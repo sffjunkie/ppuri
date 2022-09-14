@@ -1,8 +1,8 @@
 import pytest
-from ppuri.component.scheme import parse_scheme, scan_scheme
+from ppuri.component import scheme
 
 
-good_schemes = [
+good_scheme_names = [
     ("https:", "https"),
     ("postgres:", "postgres"),
     ("urn:", "urn"),
@@ -11,6 +11,10 @@ good_schemes = [
     ("iris.beep:", "iris.beep"),
     ("https://", "https"),
     ("https://www.example.com", "https"),
+]
+
+good_schemes = [
+    ("urn:nid:n:s:s", "urn"),
 ]
 
 missing_schemes = [
@@ -29,31 +33,30 @@ text_with_scheme: list[tuple[str, list[str]]] = [
         "This is some text with 2 URI schemes https://www.example.com and urn:a:b:c:d",
         ["https", "urn"],
     ),
-    ("This is some text without a valid URI scheme htt!ps://www.example.com", []),
 ]
 
 
-@pytest.mark.parametrize("text,scheme", good_schemes)
-def test_scheme_parse_good(text: str, scheme: str):
-    assert parse_scheme(text) == scheme  # type: ignore
+@pytest.mark.parametrize("text,info", good_schemes)
+def test_scheme_parse_good_scheme(text: str, info: str):
+    result = scheme.parse(text)  # type: ignore
+    assert result == info
 
 
-@pytest.mark.parametrize("text,scheme", missing_schemes)
-def test_scheme_parse_missing(text: str, scheme: str):
-    assert parse_scheme(text, "unknown") == "unknown"  # type: ignore
+@pytest.mark.parametrize("text,info", good_scheme_names)
+def test_scheme_parse_good_scheme_name(text: str, info: str):
+    assert scheme.parse(text) == info  # type: ignore
+
+
+@pytest.mark.parametrize("text,info", missing_schemes)
+def test_scheme_parse_missing_scheme_name(text: str, info: str):
+    assert scheme.parse(text, "unknown") == "unknown"  # type: ignore
 
 
 @pytest.mark.parametrize("text", bad_schemes)
-def test_scheme_parse_bad(text: str):
-    assert parse_scheme(text) == ""  # type: ignore
+def test_scheme_parse_bad_scheme_name(text: str):
+    assert scheme.parse(text) == ""  # type: ignore
 
 
 @pytest.mark.parametrize("text", bad_schemes)
-def test_scheme_parse_bad_with_default(text: str):
-    assert parse_scheme(text, "unknown") == "unknown"  # type: ignore
-
-
-@pytest.mark.parametrize("text,schemes", text_with_scheme)
-def test_scheme_scan(text: str, schemes: list[str]):
-    assert scan_scheme(text) == schemes  # type: ignore
-    pass
+def test_scheme_parse_bad_scheme_name_with_default(text: str):
+    assert scheme.parse(text, "unknown") == "unknown"  # type: ignore

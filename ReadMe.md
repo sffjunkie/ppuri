@@ -15,9 +15,9 @@ pipx install ppuri
 Either import `Uri` from `ppuri.uri` and use the pyparsing `parse_string` method to match and parse against all URI schemes e.g.
 
 ```python
-from ppuri.uri import Uri
-info = Uri.parse_string("https://www.example.com:443/a.path?q=aparam#afragment")
-print(inf["scheme"])
+from ppuri import uri
+info = uri.parse("https://www.example.com:443/a.path?q=aparam#afragment")
+print(info["scheme"])
 print(info["authority"]["address"])
 ```
 
@@ -31,15 +31,15 @@ www.example.com
 Or import a specific scheme
 
 ```python
-from ppuri.scheme.http import Http
-info = Http.parse_string()
+from ppuri.scheme import http
+info = http.parse()
 ```
 
 and use that to parse
 
 ### Scanning
 
-To scan text for URIs use the `scan_string` method
+To scan text for URIs use the `scan` method
 
 ## Supported schemes
 
@@ -47,13 +47,13 @@ Currently supports the following schemes
 
 - http(s)
 - urn
-- aaa
-- about
-- coap
-- crid
 - data
 - file
 - mailto
+- about
+- aaa
+- coap
+- crid
 
 ### Http(s)
 

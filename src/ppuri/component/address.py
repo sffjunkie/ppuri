@@ -4,9 +4,9 @@ from ppuri.component.ipv4 import IPv4Address
 from ppuri.component.ipv6 import IPv6Address
 from ppuri.exception import ParseError
 
-ipv4_hostname = IPv4Address
+ipv4_address = IPv4Address
 
-ipv6_hostname = pp.And(
+ipv6_address = pp.And(
     [pp.Literal("[").suppress(), IPv6Address, pp.Literal("]").suppress()]
 )
 
@@ -21,29 +21,17 @@ def check_hostname(toks: pp.ParseResults):
         toks["address"] = d["address"][0]
 
 
-Hostname = (
-    pp.Or([ipv4_hostname, ipv6_hostname, hostname_string])
+Address = (
+    pp.Or([ipv4_address, ipv6_address, hostname_string])
     .set_results_name("address")
     .set_parse_action(check_hostname)  # type: ignore
 )
 
 
-def hostname_parse(text: str) -> str:
+def parse(text: str) -> str:
     try:
-        res = Hostname.parse_string(text, parse_all=True)
+        res = Address.parse_string(text, parse_all=True)
         hostname: str = res.as_list()[0]  # type: ignore
+        return hostname
     except pp.ParseException as exc:
-        raise ParseError(f"{text} is not a valid hostname") from exc
-    return hostname
-
-
-def hostname_scan(text: str) -> list[str]:
-    """Scan text for URI schemes"""
-    results = Hostname.scan_string(text)
-    schemes: list[str] = []
-
-    for result in results:
-        s: str = result[0].as_dict()["address"]  # type: ignore
-        schemes.append(s)
-
-    return schemes
+        raise ParseError(f"{text} is not a valid address") from exc

@@ -1,7 +1,6 @@
-from ppuri.component.fragment import Fragment
+from ppuri.component import fragment
 
 
 def test_fragment():
-    res = Fragment.parse_string("#afragmemt")
-    res_d = res.as_dict()  # type: ignore
-    assert res_d["fragment"] == "afragmemt"
+    result = fragment.parse("#afragmemt")
+    assert result == "afragmemt"

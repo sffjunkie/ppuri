@@ -1,7 +1,8 @@
 import pyparsing as pp
+from ppuri.exception import ParseError
 
 
-ipv4_segment = (
+segment = (
     pp.MatchFirst(
         [
             # 250 - 255
@@ -23,30 +24,33 @@ ipv4_segment = (
 
 dot = pp.Literal(".")
 
-IPv4Address = pp.Combine(ipv4_segment + (dot + ipv4_segment) * 3).set_results_name(
-    "address"
-)
+IPv4Address = pp.Combine(segment + (dot + segment) * 3).set_results_name("address")
 
 
-def ipv4_parse(text: str) -> str:
+def parse(text: str) -> str:
     """Parse an IPv4 address
 
     Returns:
         The IP address passed in if a valid address.
 
     Raises:
-        `pyparsing.ParseException` for an invalid IPv4 address"""
-    ip = IPv4Address.parse_string(text)
-    return ip.as_list()[0]  # type: ignore
+        `ParseError` for an invalid IPv4 address
+    """
+    try:
+        ip = IPv4Address.parse_string(text)
+        return ip.as_dict()["address"]  # type: ignore
+    except pp.ParseException as exc:
+        raise ParseError(f"{text} is not a valid IPv4 address") from exc
 
 
-def ipv4_search(text: str) -> list[str]:
-    """Search text for IPv4 addresses
+def scan(text: str) -> list[str]:
+    """Scan text for IPv4 addresses
 
     Returns:
-        A list of IPv4 valid addresses"""
-    res = IPv4Address.search_string(text)
-    if res:
-        return [i[0] for i in res.as_list()]  # type: ignore
-    else:
-        return []
+        A list of IPv4 valid addresses
+    """
+    res = IPv4Address.scan_string(text)
+    addresses: list[str] = []
+    for result, _start, _end in res:
+        addresses.append(result[0])  # type: ignore
+    return addresses

@@ -1,6 +1,6 @@
 import pytest
-import pyparsing as pp
-from ppuri.component.ipv6 import ipv6_parse
+from ppuri.component import ipv6
+from ppuri.exception import ParseError
 
 good_ipv6 = [
     "::0",
@@ -23,11 +23,11 @@ bad_ipv6 = [
 
 @pytest.mark.parametrize("text", good_ipv6)
 def test_ipv6_parse(text: str):
-    _res = ipv6_parse(text)
+    _res = ipv6.parse(text)
 
 
 @pytest.mark.parametrize("text", bad_ipv6)
 def test_ipv6_parse_bad(text: str):
-    with pytest.raises(pp.ParseException):
-        _res = ipv6_parse(text)
+    with pytest.raises(ParseError):
+        _res = ipv6.parse(text)
         pass

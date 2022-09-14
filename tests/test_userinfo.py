@@ -2,7 +2,7 @@ import pytest
 
 # import pyparsing as pp
 
-from ppuri.component.userinfo import UserInfo, userinfo_scan
+from ppuri.component import userinfo
 
 userinfo_test_data: list[tuple[str, dict[str, str]]] = [
     ("user:pass", {"username": "user", "password": "pass"}),
@@ -28,13 +28,6 @@ userinfo_scan_text = [
 
 @pytest.mark.parametrize("text,info", userinfo_test_data)
 def test_userinfo_parse(text: str, info: dict[str, str]):
-    res = UserInfo.parse_string(text, parse_all=True).as_dict()  # type: ignore
+    res = userinfo.parse(text)  # type: ignore
     assert res["username"] == info["username"]
     assert res["password"] == info["password"]
-
-
-@pytest.mark.parametrize("text,info", userinfo_scan_text)
-def test_userinfo_scan(text: str, info: list[dict[str, str]]):
-    res = userinfo_scan(text)  # type: ignore
-    assert len(res) == len(info)
-    assert res[0]["username"] == info[0]["username"]

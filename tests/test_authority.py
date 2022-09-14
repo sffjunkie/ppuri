@@ -2,7 +2,7 @@ import pytest
 
 # import pyparsing as pp
 
-from ppuri.component.authority import Authority
+from ppuri.component import authority
 
 authorities = [
     ("bbc.com", {"address": "bbc.com"}),
@@ -14,7 +14,7 @@ authorities = [
 ]
 
 
-@pytest.mark.parametrize("text,authority", authorities)
-def test_authority_parse(text: str, authority: list[str]):
-    res = Authority.parse_string(text, parse_all=True).as_dict()  # type: ignore
-    assert res["authority"] == authority
+@pytest.mark.parametrize("text,info", authorities)
+def test_authority_parse(text: str, info: list[str]):
+    res = authority.parse(text)
+    assert res == info

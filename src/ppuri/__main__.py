@@ -3,8 +3,8 @@ import click
 import pyparsing as pp
 import sys
 
-from ppuri.component.scheme import Scheme
-from ppuri.uri import Uri
+from ppuri.component import scheme
+from ppuri import uri as _uri
 
 
 DEFAULT_SCHEME = "https://"
@@ -17,7 +17,7 @@ DEFAULT_SCHEME = "https://"
 def parse(uri: str) -> None:
     uri = uri.strip("'\"")
     try:
-        result = Scheme.parse_string(uri)
+        result = scheme.parse(uri)
     except pp.ParseException as exc:
         uri = f"{DEFAULT_SCHEME}{uri}"
 
@@ -27,15 +27,15 @@ def parse(uri: str) -> None:
         sys.exit(1)
 
     try:
-        result = Uri.parse_string(uri, parse_all=True)
-        print(json.dumps(result.as_dict()))  # type: ignore
+        result = _uri.parse(uri)
+        print(json.dumps(result))  # type: ignore
     except pp.ParseException as exc:
         if exc.loc > colon_pos + 1:
             print(f"Unable to parse uri error at position {exc.loc}")
             print(uri)
             print(" " * exc.loc + "^")
         else:
-            uri_scheme = Scheme.parse_string(uri)["scheme"]  # type: ignore
+            uri_scheme = scheme.parse(uri)["scheme"]  # type: ignore
             print(f"Don't know how to parse scheme {uri_scheme}")
             sys.exit(1)
 

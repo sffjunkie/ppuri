@@ -1,7 +1,9 @@
 """RFC6068 / RFC5322"""
+from typing import Any
 import pyparsing as pp
 
 from ppuri.component.query import Query
+from ppuri.exception import ParseError
 
 FWS = pp.ZeroOrMore(pp.Literal(" \t")) + pp.LineEnd() + pp.OneOrMore(pp.Literal(" \t"))
 
@@ -29,11 +31,19 @@ addr_spec = pp.Combine(local_part + pp.Literal("@") + domain).set_results_name(
     "addresses*"
 )
 
-to = addr_spec + pp.Optional(pp.Literal(",").suppress() + addr_spec)
+MailToAddress = addr_spec + pp.Optional(pp.Literal(",").suppress() + addr_spec)
 
 MailTo = (
     pp.CaselessLiteral("mailto").set_results_name("scheme")
     + colon
-    + to
+    + MailToAddress
     + pp.Optional(Query)
 )
+
+
+def parse(text: str) -> dict[str, Any]:
+    try:
+        res = MailTo.parse_string(text, parse_all=True)
+        return res.as_dict()  # type: ignore
+    except pp.ParseException as exc:
+        raise ParseError(f"{text} is not a valid hostname") from exc

@@ -1,4 +1,6 @@
+from typing import Any
 import pyparsing as pp
+from ppuri.exception import ParseError
 
 question = pp.Literal("?").suppress()
 equals = pp.Literal("=").suppress()
@@ -25,3 +27,12 @@ QueryParams = pp.ZeroOrMore(pp.Optional(ampersand) + param).set_results_name(
     "parameters"
 )
 Query = question + QueryParams
+
+
+def parse(text: str) -> dict[str, Any]:
+    try:
+        res = Query.parse_string(text, parse_all=True)
+        authority: dict[str, Any] = res.as_dict()["parameters"]  # type: ignore
+        return authority
+    except pp.ParseException as exc:
+        raise ParseError(f"{text} is not a valid query string") from exc

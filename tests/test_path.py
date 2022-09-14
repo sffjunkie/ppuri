@@ -1,11 +1,11 @@
-from ppuri.component.path import Path
+from ppuri.component import path
 
 
 def test_path_empty():
-    _result = Path("")
+    _result = path.Path("")
     pass
 
 
-def test_path_ends_with_space():
-    results = Path.parse_string("/file.txt as")
-    assert results[0] == "/file.txt"
+def test_path():
+    results = path.parse("/file.txt")
+    assert results == "/file.txt"
