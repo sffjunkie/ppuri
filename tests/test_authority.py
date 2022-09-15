@@ -1,4 +1,3 @@
-from lib2to3.pgen2.parse import ParseError
 import pytest
 
 from ppuri.component import authority
