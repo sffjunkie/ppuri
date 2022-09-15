@@ -43,3 +43,6 @@ semicolon = pp.Literal(";").suppress()
 slash = pp.Literal("/").suppress()
 authority_start = pp.Literal("//").suppress()
 path_start = pp.Literal("/")
+
+scheme_characters_start = pp.alphas
+scheme_characters_next = pp.alphanums + "+.-"
