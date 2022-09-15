@@ -1,11 +1,12 @@
 # ppURI
 
-A [pyparsing](https://pyparsing-docs.readthedocs.io/en/latest/) based URI parser/scanner.
+A [pyparsing](https://pyparsing-docs.readthedocs.io/en/latest/) based URI parser/scanner library.
 
-Install using pipx, pip or your tool of choice e.g.
+Install using pip or your tool of choice e.g.
 
 ```
-pipx install ppuri
+pip install ppuri
+poetry add ppuri
 ```
 
 ## Usage

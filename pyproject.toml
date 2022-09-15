@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "ppuri"
 version = "0.3.0"
-description = "A pyparsing based URI parser/scanner"
+description = "A pyparsing based URI parser/scanner library"
 authors = ["Simon Kennedy <sffjunkie+code@gmail.com>"]
 license = "Apache-2.0"
 readme = "ReadMe.md"
