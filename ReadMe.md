@@ -82,7 +82,8 @@ Currently supports the following schemes
       "value": "parameter value or None if not provided"
     }
   ],
-  "fragment": "fragment if provided"
+  "fragment": "fragment if provided",
+  "uri": "The full URI"
 }
 ```
 
@@ -94,7 +95,8 @@ Currently supports the following schemes
 {
   "scheme": "urn",
   "nid": "Namespace Identifier",
-  "nss": "Namespace Specific String"
+  "nss": "Namespace Specific String",
+  "uri": "The full URI"
 }
 ```
 
@@ -114,7 +116,8 @@ Currently supports the following schemes
         "name": "bcc",
         "value": "dave@example.com"
     }
-  ]
+  ],
+  "uri": "The full URI"
 }
 ```
 
@@ -128,7 +131,8 @@ Currently supports the following schemes
   "type": "Mime type",
   "subtype": "Mime Subtype",
   "encoding": "base64 if specified",
-  "data": "The actual data"
+  "data": "The actual data",
+  "uri": "The full URI"
 }
 ```
 
@@ -139,6 +143,7 @@ Currently supports the following schemes
 ```json
 {
   "scheme": "file",
+  "path": "The /file/path",
   "uri": "The full URI"
 }
 ```
