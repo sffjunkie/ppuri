@@ -63,7 +63,7 @@ Currently supports the following schemes
 
 ### Http(s)
 
-`parse_string` returns a dictionary of the form
+`uri.parse()` on an HTTP url returns a dictionary of the form
 
 ```json
 {
@@ -89,7 +89,7 @@ Currently supports the following schemes
 
 ### Urn
 
-`parse_string` returns a dictionary of the form
+`uri.parse()` returns a dictionary of the form
 
 ```json
 {
@@ -102,7 +102,7 @@ Currently supports the following schemes
 
 ### MailTo
 
-`parse_string` returns a dictionary of the form
+`uri.parse()` returns a dictionary of the form
 
 ```json
 {
@@ -123,7 +123,7 @@ Currently supports the following schemes
 
 ### Data
 
-`parse_string` returns a dictionary of the form
+`uri.parse()` returns a dictionary of the form
 
 ```json
 {
@@ -138,7 +138,7 @@ Currently supports the following schemes
 
 ### File
 
-`parse_string` returns a dictionary of the form
+`uri.parse()` returns a dictionary of the form
 
 ```json
 {
