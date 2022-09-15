@@ -16,16 +16,35 @@ Urn = pp.CaselessLiteral("urn").set_results_name("scheme") + colon + nid + colon
 
 
 def parse(text: str) -> dict[str, Any]:
+    """Parse a URN into its components.
+
+    Args:
+        text: The text to parse as an URN
+
+    Returns:
+        A dictionary of URI components and values
+
+    Raises:
+        `ppuri.exception.ParseError` if text is not a valid URN
+    """
     try:
         parse_result = Urn.parse_string(text)
         parse_result = parse_result.as_dict()  # type: ignore
         parse_result["uri"] = text.strip("\n")
         return parse_result  # type: ignore
     except pp.ParseException as exc:
-        raise ParseError(f"{text} is not a valid URL") from exc
+        raise ParseError(f"{text} is not a valid URN") from exc
 
 
 def scan(text: str) -> list[dict[str, str]]:
+    """Scan a string for URNs.
+
+    Args:
+        text: The text to scan for URNs
+
+    Returns:
+        A list of matching strings
+    """
     uris: list[dict[str, str]] = []
 
     for tokens, start, end in Urn.scan_string(text):

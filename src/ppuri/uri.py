@@ -1,3 +1,7 @@
+"""URI parse/scan
+
+https://www.rfc-editor.org/rfc/rfc3986
+"""
 from typing import Any
 
 from pyparsing import ParseException
@@ -17,6 +21,17 @@ Uri = Http ^ MailTo ^ File ^ AAA ^ COAP ^ Crid ^ Urn ^ Data | Url
 
 
 def parse(text: str) -> dict[str, Any]:
+    """Parse a URI into its components.
+
+    Args:
+        text: The text to parse as an URI
+
+    Returns:
+        A dictionary of URI components and values
+
+    Raises:
+        `ppuri.exception.ParseError` if text is not a valid URI
+    """
     try:
         parse_result = Uri.parse_string(text, parse_all=True)
         parse_result = parse_result.as_dict()  # type: ignore
@@ -27,6 +42,14 @@ def parse(text: str) -> dict[str, Any]:
 
 
 def scan(text: str) -> list[dict[str, str]]:
+    """Scan a string for all URIs.
+
+    Args:
+        text: The text to scan for URIs
+
+    Returns:
+        A list of matching strings
+    """
     uris: list[dict[str, str]] = []
 
     for tokens, start, end in Uri.scan_string(text):

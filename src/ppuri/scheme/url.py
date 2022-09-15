@@ -1,4 +1,7 @@
-"""A generic URL"""
+"""A generic URL
+
+https://www.rfc-editor.org/rfc/rfc3986
+"""
 
 from typing import Any
 
@@ -30,6 +33,17 @@ Url = (
 
 
 def parse(text: str) -> dict[str, Any]:
+    """Parse a generic URL into its components.
+
+    Args:
+        text: The text to parse as an generic URL
+
+    Returns:
+        A dictionary of URI components and values
+
+    Raises:
+        `ppuri.exception.ParseError` if text is not a valid generic URL
+    """
     try:
         parse_result = Url.parse_string(text)
         parse_result = parse_result.as_dict()  # type: ignore
@@ -40,6 +54,14 @@ def parse(text: str) -> dict[str, Any]:
 
 
 def scan(text: str) -> list[dict[str, str]]:
+    """Scan a string for generic URLs.
+
+    Args:
+        text: The text to scan for generic URLs
+
+    Returns:
+        A list of matching strings
+    """
     uris: list[dict[str, str]] = []
 
     for tokens, start, end in Url.scan_string(text):

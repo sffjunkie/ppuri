@@ -39,14 +39,33 @@ AAA = AAAf() ^ AAAf("s")
 
 
 def parse(text: str) -> dict[str, Any]:
+    """Parse an `aaa` URI into its components.
+
+    Args:
+        text: The text to parse as an `aaa` URI
+
+    Returns:
+        A dictionary of URI components and values
+
+    Raises:
+        `ppuri.exception.ParseError` if text is not a valid `aaa` URI
+    """
     try:
         res = AAA.parse_string(text, parse_all=True)
         return res.as_dict()  # type: ignore
     except pp.ParseException as exc:
-        raise ParseError(f"{text} is not a valid hostname") from exc
+        raise ParseError(f"{text} is not a valid aaa URI") from exc
 
 
 def scan(text: str) -> list[dict[str, str]]:
+    """Scan a string for `aaa` URIs.
+
+    Args:
+        text: The text to scan for `aaa` URIs
+
+    Returns:
+        A list of matching strings
+    """
     uris: list[dict[str, str]] = []
 
     for tokens, start, end in AAA.scan_string(text):

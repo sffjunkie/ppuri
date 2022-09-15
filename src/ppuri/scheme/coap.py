@@ -1,3 +1,7 @@
+"""Constrained Application Protocol (CoAP) URI scheme
+
+https://www.rfc-editor.org/rfc/rfc7252.html
+"""
 from typing import Any
 
 import pyparsing as pp
@@ -28,14 +32,33 @@ COAP = (
 
 
 def parse(text: str) -> dict[str, Any]:
+    """Parse an `coap` URI into its components.
+
+    Args:
+        text: The text to parse as an `coap` URI
+
+    Returns:
+        A dictionary of URI components and values
+
+    Raises:
+        `ppuri.exception.ParseError` if text is not a valid `coap` URI
+    """
     try:
         res = COAP.parse_string(text, parse_all=True)
         return res.as_dict()  # type: ignore
     except pp.ParseException as exc:
-        raise ParseError(f"{text} is not a valid hostname") from exc
+        raise ParseError(f"{text} is not a valid COAP URI") from exc
 
 
 def scan(text: str) -> list[dict[str, str]]:
+    """Scan a string for `coap` URIs.
+
+    Args:
+        text: The text to scan for `coap` URIs
+
+    Returns:
+        A list of matching strings
+    """
     uris: list[dict[str, str]] = []
 
     for tokens, start, end in COAP.scan_string(text):

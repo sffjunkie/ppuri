@@ -1,4 +1,6 @@
-"""RFC6068 / RFC5322"""
+"""The 'mailto' URI Scheme
+
+https://www.rfc-editor.org/rfc/rfc6068.html / https://www.rfc-editor.org/rfc/rfc5322.html"""
 from typing import Any
 
 import pyparsing as pp
@@ -42,14 +44,33 @@ MailTo = (
 
 
 def parse(text: str) -> dict[str, Any]:
+    """Parse a `mailto` URI into its components.
+
+    Args:
+        text: The text to parse as an `mailto` URI
+
+    Returns:
+        A dictionary of URI components and values
+
+    Raises:
+        `ppuri.exception.ParseError` if text is not a valid `mailto` URI
+    """
     try:
         res = MailTo.parse_string(text, parse_all=True)
         return res.as_dict()  # type: ignore
     except pp.ParseException as exc:
-        raise ParseError(f"{text} is not a valid hostname") from exc
+        raise ParseError(f"{text} is not a valid mailto URI") from exc
 
 
 def scan(text: str) -> list[dict[str, str]]:
+    """Scan a string for `mailto` URIs.
+
+    Args:
+        text: The text to scan for `mailto` URIs
+
+    Returns:
+        A list of matching strings
+    """
     uris: list[dict[str, str]] = []
 
     for tokens, start, end in MailTo.scan_string(text):

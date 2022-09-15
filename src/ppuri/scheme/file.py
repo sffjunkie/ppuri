@@ -1,3 +1,7 @@
+"""The "file" URI Scheme
+
+https://www.rfc-editor.org/rfc/rfc8089.html
+"""
 from typing import Any
 
 import pyparsing as pp
@@ -17,14 +21,33 @@ File = (
 
 
 def parse(text: str) -> dict[str, Any]:
+    """Parse a `file` URI into its components.
+
+    Args:
+        text: The text to parse as an `file` URI
+
+    Returns:
+        A dictionary of URI components and values
+
+    Raises:
+        `ppuri.exception.ParseError` if text is not a valid `file` URI
+    """
     try:
         res = File.parse_string(text, parse_all=True)
         return res.as_dict()  # type: ignore
     except pp.ParseException as exc:
-        raise ParseError(f"{text} is not a valid hostname") from exc
+        raise ParseError(f"{text} is not a valid file URI") from exc
 
 
 def scan(text: str) -> list[dict[str, str]]:
+    """Scan a string for `file` URIs.
+
+    Args:
+        text: The text to scan for `file` URIs
+
+    Returns:
+        A list of matching strings
+    """
     uris: list[dict[str, str]] = []
 
     for tokens, start, end in File.scan_string(text):
