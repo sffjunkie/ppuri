@@ -76,7 +76,7 @@ Currently supports the following schemes
   },
   "path": "path if provided",
   "parameters": [
-    "list of parameters if provided",
+    // list of parameters if provided
     {
       "name": "parameter name",
       "value": "parameter value or None if not provided"
