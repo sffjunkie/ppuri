@@ -29,7 +29,8 @@ prints
   "fragment": "afragment",
   "parameters": [{ "name": "q", "value": "aparam" }],
   "path": "/a.path",
-  "scheme": "https"
+  "scheme": "https",
+  "uri": "https://www.example.com:443/a.path?q=aparam#afragment"
 }
 ```
 
@@ -138,7 +139,7 @@ Currently supports the following schemes
 ```json
 {
   "scheme": "file",
-  "path": "The /file/path"
+  "uri": "The full URI"
 }
 ```
 
