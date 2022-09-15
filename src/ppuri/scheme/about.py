@@ -13,16 +13,6 @@ from ppuri.exception import ParseError
 colon = pp.Literal(":").suppress()
 semicolon = pp.Literal(";").suppress()
 
-transports = pp.Literal("tcp") | pp.Literal("udp") | pp.Literal("utcp")
-protocols = pp.Literal("diameter") | pp.Literal("radius") | pp.Literal("tacacs+")
-
-transport = pp.Combine(
-    semicolon + pp.Literal("transport=") + transports.set_results_name("transport")
-)
-protocol = pp.Combine(
-    semicolon + pp.Literal("protocol=") + protocols.set_results_name("protocol")
-)
-
 tokens = pp.Literal("blank")
 
 About = pp.Combine(
