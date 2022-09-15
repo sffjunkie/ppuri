@@ -15,12 +15,6 @@ DEFAULT_SCHEME = "https://"
     "uri", default="https://www.example.com:443/long/path?q=where%20am%20i#here"
 )
 def parse(uri: str) -> None:
-    uri = uri.strip("'\"")
-    try:
-        result = scheme.parse(uri)
-    except pp.ParseException as exc:
-        uri = f"{DEFAULT_SCHEME}{uri}"
-
     colon_pos = uri.find(":")
     if colon_pos == -1:
         print(f"{uri} is not a valid URI")
@@ -35,7 +29,7 @@ def parse(uri: str) -> None:
             print(uri)
             print(" " * exc.loc + "^")
         else:
-            uri_scheme = scheme.parse(uri)["scheme"]  # type: ignore
+            uri_scheme = scheme.parse(uri)
             print(f"Don't know how to parse scheme {uri_scheme}")
             sys.exit(1)
 
