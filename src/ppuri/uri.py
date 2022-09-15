@@ -20,7 +20,7 @@ def parse(text: str) -> dict[str, Any]:
     try:
         parse_result = Uri.parse_string(text, parse_all=True)
         parse_result = parse_result.as_dict()  # type: ignore
-        parse_result["uri"] = text
+        parse_result["uri"] = text.strip("\n")
         return parse_result  # type: ignore
     except ParseException as exc:
         raise ParseError(f"{text} is not a valid URI") from exc
@@ -31,7 +31,7 @@ def scan(text: str) -> list[dict[str, str]]:
 
     for tokens, start, end in Uri.scan_string(text):
         scan_result: dict[str, str] = tokens.as_dict()  # type: ignore
-        scan_result["uri"] = text[start:end]
+        scan_result["uri"] = text[start:end].strip("\n")
         uris.append(scan_result)
 
     return uris
