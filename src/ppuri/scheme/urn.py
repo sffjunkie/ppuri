@@ -1,4 +1,7 @@
+from typing import Any
+
 import pyparsing as pp
+from ppuri.exception import ParseError
 
 colon = pp.Literal(":").suppress()
 nid = pp.Word(pp.alphanums, pp.alphanums + "-", min=1, max=31).set_results_name("nid")
@@ -10,3 +13,24 @@ trans = pp.alphanums + other + reserved
 nss = pp.Word(trans).set_results_name("nss")
 
 Urn = pp.CaselessLiteral("urn").set_results_name("scheme") + colon + nid + colon + nss
+
+
+def parse(text: str) -> dict[str, Any]:
+    try:
+        parse_result = Urn.parse_string(text)
+        parse_result = parse_result.as_dict()  # type: ignore
+        parse_result["uri"] = text.strip("\n")
+        return parse_result  # type: ignore
+    except pp.ParseException as exc:
+        raise ParseError(f"{text} is not a valid URL") from exc
+
+
+def scan(text: str) -> list[dict[str, str]]:
+    uris: list[dict[str, str]] = []
+
+    for tokens, start, end in Urn.scan_string(text):
+        scan_result: dict[str, str] = tokens.as_dict()  # type: ignore
+        scan_result["uri"] = text[start:end].strip("\n")
+        uris.append(scan_result)
+
+    return uris

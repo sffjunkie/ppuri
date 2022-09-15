@@ -1,7 +1,7 @@
 """RFC6068 / RFC5322"""
 from typing import Any
-import pyparsing as pp
 
+import pyparsing as pp
 from ppuri.component.query import Query
 from ppuri.exception import ParseError
 
@@ -47,3 +47,14 @@ def parse(text: str) -> dict[str, Any]:
         return res.as_dict()  # type: ignore
     except pp.ParseException as exc:
         raise ParseError(f"{text} is not a valid hostname") from exc
+
+
+def scan(text: str) -> list[dict[str, str]]:
+    uris: list[dict[str, str]] = []
+
+    for tokens, start, end in MailTo.scan_string(text):
+        scan_result: dict[str, str] = tokens.as_dict()  # type: ignore
+        scan_result["uri"] = text[start:end].strip("\n")
+        uris.append(scan_result)
+
+    return uris

@@ -5,16 +5,15 @@ from typing import Any
 import pyparsing as pp
 from ppuri import (
     authority_start,
-    scheme_characters_start,
-    scheme_characters_next,
     colon,
+    scheme_characters_next,
+    scheme_characters_start,
 )
 from ppuri.component.authority import Authority
 from ppuri.component.fragment import Fragment
 from ppuri.component.path import Path
 from ppuri.component.query import Query
 from ppuri.exception import ParseError
-
 
 scheme_name = pp.Word(scheme_characters_start, scheme_characters_next)
 UrlScheme = pp.Combine(scheme_name + colon)
