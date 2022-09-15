@@ -13,7 +13,7 @@ from ppuri.exception import ParseError
 colon = pp.Literal(":").suppress()
 semicolon = pp.Literal(";").suppress()
 
-tokens = pp.Literal("blank")
+tokens = pp.Literal("blank").set_results_name("token")
 
 About = pp.Combine(
     pp.CaselessLiteral("about").set_results_name("scheme")
