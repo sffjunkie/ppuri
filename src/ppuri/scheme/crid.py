@@ -9,6 +9,7 @@ from ppuri import authority_start
 from ppuri.component.authority import Authority
 from ppuri.component.path import Path
 from ppuri.exception import ParseError
+from ppuri.types import MatchLocation, ScanResult
 
 colon = pp.Literal(":").suppress()
 
@@ -40,7 +41,7 @@ def parse(text: str) -> dict[str, Any]:
         raise ParseError(f"{text} is not a valid CRID URI") from exc
 
 
-def scan(text: str) -> list[dict[str, str]]:
+def scan(text: str) -> list[ScanResult]:
     """Scan a string for `crid` URIs.
 
     Args:
@@ -49,11 +50,12 @@ def scan(text: str) -> list[dict[str, str]]:
     Returns:
         A list of matching strings
     """
-    uris: list[dict[str, str]] = []
+    uris: list[ScanResult] = []
 
     for tokens, start, end in Crid.scan_string(text):
-        scan_result: dict[str, str] = tokens.as_dict()  # type: ignore
+        scan_result: ScanResult = tokens.as_dict()  # type: ignore
         scan_result["uri"] = text[start:end].strip("\n")
+        scan_result["location"] = MatchLocation(1, start + 1)
         uris.append(scan_result)
 
     return uris
