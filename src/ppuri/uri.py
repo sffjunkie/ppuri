@@ -8,6 +8,7 @@ from pyparsing import ParseException
 
 from ppuri.exception import ParseError
 from ppuri.scheme.aaa import AAA
+from ppuri.scheme.about import About
 from ppuri.scheme.coap import COAP
 from ppuri.scheme.crid import Crid
 from ppuri.scheme.data import Data
@@ -17,7 +18,7 @@ from ppuri.scheme.mailto import MailTo
 from ppuri.scheme.url import Url
 from ppuri.scheme.urn import Urn
 
-Uri = Http ^ MailTo ^ File ^ AAA ^ COAP ^ Crid ^ Urn ^ Data | Url
+Uri = Http ^ MailTo ^ File ^ AAA ^ About ^ COAP ^ Crid ^ Urn ^ Data | Url
 
 
 def parse(text: str) -> dict[str, Any]:
