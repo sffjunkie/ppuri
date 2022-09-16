@@ -45,7 +45,24 @@ and use that to parse
 
 ### Scanning
 
-To scan text for URIs use the `scan` method
+To scan text for all URI schemes use the `scan` method. This also returns information on the location in the string where the URI was found.
+
+```python
+from ppuri import uri
+text = """This is a file with 3 URIs
+A url https://www.example.com:443/a.path?q=aparam#afragment and a file file://google.txt one one line
+and another https://google.com on the second line."""
+info = uri.scan(text)
+print(info[0]["location"])
+```
+
+Prints
+
+```python
+MatchLocation(line=1, column=34)
+```
+
+To scan a complete file for URIs use the `uri.scan_file` function
 
 ## Supported schemes
 
