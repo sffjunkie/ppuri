@@ -47,7 +47,7 @@ def scan(text: str) -> list[ScanResult]:
         text: The text to scan for `file` URIs
 
     Returns:
-        A list of matching strings
+        A list of ScanResults
     """
     uris: list[ScanResult] = []
 

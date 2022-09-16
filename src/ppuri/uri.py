@@ -51,7 +51,7 @@ def scan(text: str) -> list[ScanResult]:
         text: The text to scan for URIs
 
     Returns:
-        A list of matching strings
+        A list of ScanResults
     """
     uris: list[ScanResult] = []
 
