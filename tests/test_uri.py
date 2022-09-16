@@ -1,3 +1,5 @@
+from pathlib import Path
+from typing import cast
 from ppuri import uri
 
 
@@ -88,7 +90,7 @@ def test_uri_parse_url():
     assert results["authority"] == {"address": "example.com", "port": "5432"}
 
 
-def test_uri_parse_url():
+def test_uri_parse_urn():
     text = "urn:nid:n:s:s"
     results = uri.parse(text)
     assert results["scheme"] == "urn"
@@ -100,3 +102,15 @@ def test_uri_scan():
     text = "A url https://example.com and a file file://google.txt and another https://google.com"
     results = uri.scan(text)
     assert len(results) == 3
+
+
+def test_uri_scan_file():
+    test_file = Path(__file__).parent / "file" / "uri.txt"
+    results = uri.scan_file(test_file)
+    assert results is not None
+    assert len(results) == 3
+    loc = cast(uri.MatchLocation, results[0]["location"])
+    assert loc.line == 2
+    assert loc.column == 7
+    loc = cast(uri.MatchLocation, results[2]["location"])
+    assert loc.line == 3

@@ -1,0 +1,3 @@
+This is a file with 3 URIs
+A url https://www.example.com:443/a.path?q=aparam#afragment and a file file://google.txt one one line
+and another https://google.com on the second line.
