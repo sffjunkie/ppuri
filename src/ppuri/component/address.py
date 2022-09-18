@@ -22,7 +22,7 @@ def check_hostname(toks: pp.ParseResults):
 
 
 Address = (
-    pp.Or([ipv4_address, ipv6_address, hostname_string])
+    pp.MatchFirst([ipv4_address, ipv6_address, hostname_string])
     .set_results_name("address")
     .set_parse_action(check_hostname)  # type: ignore
 )
