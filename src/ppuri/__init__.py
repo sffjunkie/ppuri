@@ -15,6 +15,8 @@
 
 import pyparsing as pp
 
+pp.ParserElement.enablePackrat()
+
 __version__ = "0.3.1"
 
 # TODO: Use these variables
