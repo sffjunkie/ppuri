@@ -1,7 +1,7 @@
 """Exception claases"""
 
 
-class ParseError(Exception):
+class ParseError(ValueError):
     """Parsing error"""
 
     ...
